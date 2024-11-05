@@ -23,14 +23,6 @@ class App:
         self._menu.close()
 
     def on_event(self, event) -> None:
-        if event.type == pygame.QUIT:
-            self._is_running = False
-        if event.type == pygame.KEYDOWN:
-            key=pygame.key.name(event.key)
-            print (f"'{key}' pressed")
-        elif event.type == pygame.KEYUP:
-            key=pygame.key.name(event.key)
-            print (f"'{key}' released")
         match event.type:
             case pygame.QUIT:
                 self._is_running = False
