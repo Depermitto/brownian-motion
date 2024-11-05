@@ -1,5 +1,6 @@
 import pygame
 from pygame.locals import *
+# typing imports
 from typing import Tuple
 
 class Entity(pygame.sprite.Sprite):
