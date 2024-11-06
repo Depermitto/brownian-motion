@@ -26,6 +26,7 @@ class Menu(pygame_menu.Menu):
             self._items,
             onchange=callback,
             placeholder_add_to_selection_box=False,
+            selection_box_width=int(size[0] * 0.8),
         )
         self.add.button("Quit", pygame_menu.events.EXIT)
 
