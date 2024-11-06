@@ -59,9 +59,12 @@ class App:
         if self._curr_scene is None:
             self._menu.mainloop(self._display_surf)
 
+        clock = pygame.time.Clock()
         while self._is_running:
+            dt: float = clock.tick(60) / 1000  # convert to seconds
+
             for event in pygame.event.get():
                 self.on_event(event)
-            self._curr_scene.on_loop()
+            self._curr_scene.on_loop(dt)
             self._curr_scene.on_render(self._display_surf)
         self.on_cleanup()
