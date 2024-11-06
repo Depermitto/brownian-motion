@@ -1,11 +1,15 @@
 import pygame
 from pygame.locals import *
+
 # typing imports
 from typing import Tuple, List
 from .entity import Entity
 
+
 class Scene:
-    def __init__(self, name: str, background_color: Tuple[int,int,int]=(21,32,43)) -> None:
+    def __init__(
+        self, name: str, background_color: Tuple[int, int, int] = (21, 32, 43)
+    ) -> None:
         self.name = name
         self._background_color = background_color
         self._entities: List[Entity] = []
@@ -15,7 +19,7 @@ class Scene:
 
     def register_entity(self, entity: Entity) -> None:
         self._entities.append(entity)
-    
+
     def on_loop(self) -> None:
         for entity in self._entities:
             entity.move()

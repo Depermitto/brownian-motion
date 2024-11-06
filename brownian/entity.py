@@ -1,10 +1,17 @@
 import pygame
 from pygame.locals import *
+
 # typing imports
 from typing import Tuple
 
+
 class Entity(pygame.sprite.Sprite):
-    def __init__(self, center: Tuple[int,int], radius: int=10, color: Tuple[int,int,int]=(255,255,255)):
+    def __init__(
+        self,
+        center: Tuple[int, int],
+        radius: int = 10,
+        color: Tuple[int, int, int] = (255, 255, 255),
+    ):
         super(Entity, self).__init__()
         if type(radius) != int or radius <= 0:
             raise ValueError("Radius must be a positive integer")
@@ -20,5 +27,6 @@ class Entity(pygame.sprite.Sprite):
     def move(self):
         # TODO: implement
         from random import randint
-        self.x += randint(-1,1)
-        self.y += randint(-1,1)
+
+        self.x += randint(-1, 1)
+        self.y += randint(-1, 1)
