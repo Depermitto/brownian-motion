@@ -19,6 +19,7 @@ def get_scene2() -> brownian.Scene:
     return s
 
 
+<<<<<<< HEAD
 def get_scene_collision_test(entities_n: int = 30) -> brownian.Scene:
     maxx, maxy = pygame.display.get_window_size()
 
@@ -31,9 +32,7 @@ def get_scene_collision_test(entities_n: int = 30) -> brownian.Scene:
     for i in range(entities_n):
         s.register_entity(brownian.Entity((x[i], y[i]), 50))
 
-    return s
-
-
+=======
 def get_scene3() -> brownian.Scene:
     s = brownian.Scene("Different movement options")
     stat = brownian.Entity(
@@ -72,6 +71,7 @@ def get_scene3() -> brownian.Scene:
     s.register_entity(std)
     s.register_entity(dr)
     s.register_entity(geo)
+>>>>>>> a51f7436c32a6431e8b342b35b51e0725afb535b
     return s
 
 
@@ -80,8 +80,11 @@ def main():
     app = brownian.App()
     app.register_scene(get_scene1())
     app.register_scene(get_scene2())
-    app.register_scene(get_scene3())
+<<<<<<< HEAD
     app.register_scene(get_scene_collision_test())
+=======
+    app.register_scene(get_scene3())
+>>>>>>> a51f7436c32a6431e8b342b35b51e0725afb535b
     app.run()
     print("Goodbye!")
 
