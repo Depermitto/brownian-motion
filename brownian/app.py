@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import *
+from pygame.locals import *  # type: ignore
 
 # typing imports
 from typing import Tuple, List
@@ -17,7 +17,7 @@ class App:
         )
         self._is_running = True
         self._background_color = background_color
-        self._curr_scene = None
+        self._curr_scene: Scene | None = None
         self._menu = Menu(self.select_scene, size=(1600, 800))
 
     def register_scene(self, scene: Scene) -> None:
@@ -59,12 +59,14 @@ class App:
         if self._curr_scene is None:
             self._menu.mainloop(self._display_surf)
 
+        assert self._curr_scene is not None
+
         clock = pygame.time.Clock()
         while self._is_running:
             dt: float = clock.tick(60) / 1000  # convert to seconds
 
             for event in pygame.event.get():
                 self.on_event(event)
-            self._curr_scene.on_loop(dt)
+            self._curr_scene.on_loop(dt, (0, 0, *pygame.display.get_window_size()))
             self._curr_scene.on_render(self._display_surf)
         self.on_cleanup()
