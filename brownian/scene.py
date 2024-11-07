@@ -22,10 +22,10 @@ class Scene:
     def register_entity(self, entity: Entity) -> None:
         self._entities.append(entity)
 
-    def on_loop(self, dt: float) -> None:
+    def on_loop(self, dt: float, bounding_box: Tuple[int, int, int, int]) -> None:
         for c1 in self._entities:
-
-            c1.move_delta(dt)
+            c1.move(dt)
+            Collision.bounding_box(c1, bounding_box)
 
             for c2 in self._entities:
                 if c2 == c1:
@@ -33,8 +33,6 @@ class Scene:
 
                 Collision.static_static(c1, c2)
                 # Collision.static_dynamic(c1, c2)
-
-            c1.move()
 
     def on_render(self, surface) -> None:
         surface.fill(self._background_color)

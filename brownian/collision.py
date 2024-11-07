@@ -9,18 +9,19 @@ class Collision:
         """Performs static-static collision check
         and adjusts positions of colliding entities."""
 
-        d = sqrt((c2.x - c1.x) ** 2 + (c2.y - c1.y) ** 2)
-        d = max(d, 0.0001)  # if centers are the same, should happen very rarely
-        if d < c1.radius + c2.radius:
-            # we were already colliding, so we need to uncollide
-
+        distsq = (c2.x - c1.x) ** 2 + (c2.y - c1.y) ** 2
+        # if centers are the same we set distance to a very small number
+        distsq = max(distsq, 1e-6)
+        radii = (c1.radius + c2.radius) ** 2
+        if distsq < radii:
+            dist = sqrt(distsq)
             midpointx = (c1.x + c2.x) / 2
             midpointy = (c1.y + c2.y) / 2
 
-            c1.x = midpointx + c1.radius * (c1.x - c2.x) / d
-            c1.y = midpointy + c1.radius * (c1.y - c2.y) / d
-            c2.x = midpointx + c2.radius * (c2.x - c1.x) / d
-            c2.y = midpointy + c2.radius * (c2.y - c1.y) / d
+            c1.x = midpointx + c1.radius * (c1.x - c2.x) / dist
+            c1.y = midpointy + c1.radius * (c1.y - c2.y) / dist
+            c2.x = midpointx + c2.radius * (c2.x - c1.x) / dist
+            c2.y = midpointy + c2.radius * (c2.y - c1.y) / dist
 
     @staticmethod
     def static_dynamic(c1: Entity, c2: Entity) -> None:
@@ -44,6 +45,20 @@ class Collision:
 
             c1.dx = c1.dx - p * c1.m * nx - p * c2.m * nx
             c1.dy = c1.dy - p * c1.m * ny - p * c2.m * ny
+
+    @staticmethod
+    def bounding_box(c: Entity, bounds: Tuple[int, int, int, int]) -> None:
+        left, top, right, bot = bounds
+
+        # pmjial math. It works just trust me bro.
+        if c.x - c.radius < left:
+            c.x = 2 * left + 2 * c.radius - c.x
+        if c.y - c.radius < top:
+            c.y = 2 * top + 2 * c.radius - c.y
+        if c.x + c.radius > right:
+            c.x = 2 * right - 2 * c.radius - c.x
+        if c.y + c.radius > bot:
+            c.y = 2 * bot - 2 * c.radius - c.y
 
     @staticmethod
     def _closest_point_on_line(
