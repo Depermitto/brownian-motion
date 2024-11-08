@@ -49,7 +49,7 @@ class Entity(pygame.sprite.Sprite):
         pygame.draw.circle(surface, self.color, (self.x, self.y), self.radius)
 
     def move(self, dt: float):
-        self.dy = self._y_step(self.y, dt, self._mu, self._sigma) * self._p
-        self.dx = self._x_step(self.x, dt, self._mu, self._sigma) * self._p
+        self.dx = self._x_step(dt, self._mu, self._sigma) * self._p
+        self.dy = self._y_step(dt, self._mu, self._sigma) * self._p
         self.x += self.dx
         self.y += self.dy

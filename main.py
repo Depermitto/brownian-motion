@@ -50,8 +50,8 @@ def get_scene_motion_test() -> brownian.Scene:
         (255, 255, 255),
         x_motion=brownian.BrownianMotion.geometric,
         y_motion=brownian.BrownianMotion.geometric,
-        mu=0.01,
-        sigma=0.01,
+        mu=3,
+        sigma=7,
     )
     s.register_entity(stat)
     s.register_entity(std)
