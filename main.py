@@ -1,5 +1,3 @@
-import numpy as np
-import pygame
 import brownian
 import brownian.examples
 
