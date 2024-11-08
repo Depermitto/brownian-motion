@@ -1,6 +1,7 @@
 import numpy as np
 import pygame
 import brownian
+from brownian import motion
 
 
 def get_scene_duo() -> brownian.Scene:
@@ -60,17 +61,32 @@ def get_scene_motion_test() -> brownian.Scene:
     return s
 
 
-def get_scene_collision_test(entities_n: int = 30) -> brownian.Scene:
+def get_scene_collision_test() -> brownian.Scene:
     maxx, maxy = pygame.display.get_window_size()
 
     s = brownian.Scene("Collision test")
-    r1 = brownian.Entity((maxx / 2, maxy / 2), 75, (100, 200, 255))
-    s.register_entity(r1)
+    s.register_entity(
+        brownian.Entity(
+            center=(maxx / 2, maxy / 2),
+            radius=75,
+            color=(100, 200, 255),
+            m=1,
+            movement_multiplier=0.01,
+        )
+    )
 
+    entities_n = 150
     x = np.random.randint(0, maxx, entities_n)
     y = np.random.randint(0, maxy, entities_n)
     for i in range(entities_n):
-        s.register_entity(brownian.Entity((x[i], y[i]), 50))
+        s.register_entity(
+            brownian.Entity(
+                center=(x[i], y[i]),
+                radius=20,
+                m=60,
+                movement_multiplier=50,
+            )
+        )
 
     return s
 
@@ -81,7 +97,7 @@ def main():
     app.register_scene(get_scene_duo())
     app.register_scene(get_scene_single_guy())
     app.register_scene(get_scene_motion_test())
-    app.register_scene(get_scene_collision_test(40))
+    app.register_scene(get_scene_collision_test())
     app.run()
     print("Goodbye!")
 

@@ -23,16 +23,20 @@ class Scene:
         self._entities.append(entity)
 
     def on_loop(self, dt: float, bounding_box: Tuple[int, int, int, int]) -> None:
-        for c1 in self._entities:
-            c1.move(dt)
-            Collision.bounding_box(c1, bounding_box)
+        for c in self._entities:
+            c.move(dt)
 
+        for c1 in self._entities:
             for c2 in self._entities:
                 if c2 == c1:
                     continue
 
-                Collision.dynamic_static(c1, c2)
-                Collision.static_static(c1, c2, 100)
+                Collision.dynamic_dynamic(c1, c2)
+                # Collision.dynamic_static(c1, c2)
+                # Collision.static_static(c1, c2, 100)
+
+        for c in self._entities:
+            Collision.bounding_box(c, bounding_box)
 
     def on_render(self, surface) -> None:
         surface.fill(self._background_color)

@@ -13,6 +13,7 @@ class Entity(pygame.sprite.Sprite):
         center: Tuple[float | int, float | int],
         radius: int = 10,
         color: Tuple[int, int, int] = (255, 255, 255),
+        m: float = 1,
         mu: float = 0,
         sigma: float = 1,
         x_motion: Callable = BrownianMotion.standard,
@@ -42,7 +43,7 @@ class Entity(pygame.sprite.Sprite):
         """Difference between the previous position and current on y axis"""
 
         # other elements
-        self.m = 1
+        self.m = m
         self._p = movement_multiplier
 
     def draw(self, surface: pygame.Surface) -> None:

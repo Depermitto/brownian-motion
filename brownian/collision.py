@@ -52,6 +52,44 @@ class Collision:
             c1.y += c1.dy - p * c1.m * ny - p * c2.m * ny
 
     @staticmethod
+    def dynamic_dynamic(c1: Entity, c2: Entity) -> None:
+        """Performs dynamic-dynamic collision check and resolves colliding entities.
+        This function assumes that `c1` and `c2` are both dynamics entities that have
+        *already* called the `move` method."""
+        distsq = (c2.x - c1.x) ** 2 + (c2.y - c1.y) ** 2
+        radiisq = (c1.radius + c2.radius) ** 2
+        if distsq < radiisq:
+            sx, sy = Collision._closest_point_on_line(
+                c1.x - c1.dx, c1.y - c1.dy, c1.x, c1.y, c2.x, c2.y
+            )
+            closestdistsq = (c2.x - sx) ** 2 + (c2.y - sy) ** 2
+            backdist = sqrt(radiisq - closestdistsq)
+            movement_vector_length = sqrt(c1.dx**2 + c1.dy**2)
+            collision1x = sx - backdist * (c1.dx / movement_vector_length)
+            collision1y = sy - backdist * (c1.dy / movement_vector_length)
+
+            sx, sy = Collision._closest_point_on_line(
+                c2.x - c2.dx, c2.y - c2.dy, c2.x, c2.y, c1.x, c1.y
+            )
+            closestdistsq = (c1.x - sx) ** 2 + (c1.y - sy) ** 2
+            backdist = sqrt(radiisq - closestdistsq)
+            movement_vector_length = sqrt(c2.dx**2 + c2.dy**2)
+            collision2x = sx - backdist * (c2.dx / movement_vector_length)
+            collision2y = sy - backdist * (c2.dy / movement_vector_length)
+
+            d = sqrt(
+                (collision1x - collision2x) ** 2 + (collision1y - collision2y) ** 2
+            )
+            nx = (collision2x - collision1x) / d
+            ny = (collision2y - collision1y) / d
+            p = 2 * (c1.dx * nx + c1.dy * ny - c2.dx * nx - c2.dy * ny) / (c1.m + c2.m)
+
+            c1.x -= p * c1.m * nx
+            c1.y -= p * c1.m * ny
+            c2.x += p * c2.m * nx
+            c2.y += p * c2.m * ny
+
+    @staticmethod
     def bounding_box(c: Entity, bounds: Tuple[int, int, int, int]) -> None:
         left, top, right, bot = bounds
 
