@@ -1,6 +1,4 @@
 import brownian
-import brownian.examples
-
 
 def main():
     print("Hello, FO!")
