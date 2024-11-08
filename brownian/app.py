@@ -11,7 +11,7 @@ class App:
     def __init__(self, background_color: Tuple[int, int, int] = (21, 32, 43)) -> None:
         pygame.init()
         pygame.display.set_caption("Brownian motion simulation")
-        self.size = self.width, self.height = 1600, 800
+        self.size = 1600, 800
         self._display_surf = pygame.display.set_mode(
             self.size, pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF
         )
@@ -27,18 +27,25 @@ class App:
         if scene is None:
             return
         self._curr_scene = scene
-        self._menu.close()
+        self._menu.close_menu()
 
     def on_event(self, event) -> None:
         match event.type:
             case pygame.QUIT:
                 self._is_running = False
+            case pygame.VIDEORESIZE:
+                self.size = (event.w, event.h)
+                self._display_surf = pygame.display.set_mode(
+                    self.size, pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF
+                )
+                print("resize")
+                self._menu.change_size(self.size)
             case pygame.KEYDOWN:
                 key = pygame.key.name(event.key)
                 print(f"'{key}' pressed")
                 if pygame.key.key_code(key) == pygame.K_ESCAPE:
                     self._menu.enable()
-                    self._menu.mainloop(self._display_surf)
+                    self._menu.run(self._display_surf)
             case pygame.KEYUP:
                 key = pygame.key.name(event.key)
                 print(f"'{key}' released")
@@ -57,7 +64,7 @@ class App:
 
     def run(self) -> None:
         if self._curr_scene is None:
-            self._menu.mainloop(self._display_surf)
+            self._menu.run(self._display_surf)
 
         assert self._curr_scene is not None
 
