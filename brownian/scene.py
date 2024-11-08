@@ -31,8 +31,8 @@ class Scene:
                 if c2 == c1:
                     continue
 
-                Collision.static_static(c1, c2)
-                # Collision.static_dynamic(c1, c2)
+                Collision.dynamic_static(c1, c2)
+                Collision.static_static(c1, c2, 100)
 
     def on_render(self, surface) -> None:
         surface.fill(self._background_color)
