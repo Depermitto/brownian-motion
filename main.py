@@ -1,7 +1,6 @@
 import numpy as np
 import pygame
 import brownian
-from brownian import motion
 
 
 def get_scene_duo() -> brownian.Scene:
@@ -15,7 +14,15 @@ def get_scene_duo() -> brownian.Scene:
 
 def get_scene_single_guy() -> brownian.Scene:
     s = brownian.Scene("Single guy")
-    e = brownian.Entity((300, 200), 100, (255, 255, 0))
+    e = brownian.TrailingEntity(
+        (300, 200),
+        30,
+        (255, 255, 0),
+        x_motion=brownian.BrownianMotion.geometric,
+        y_motion=brownian.BrownianMotion.geometric,
+        mu=18,
+        sigma=6,
+    )
     s.register_entity(e)
     return s
 
