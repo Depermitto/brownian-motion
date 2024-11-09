@@ -13,15 +13,15 @@ class Collision:
         # if centers are the same we set distance to a very small number
         distsq = max(distsq, 1e-6)
         radii = (c1.radius + c2.radius) ** 2
-        if distsq + threshold < radii:
-            dist = sqrt(distsq)
+        if distsq + threshold**2 < radii:
+            d = sqrt(distsq)
             midpointx = (c1.x + c2.x) / 2
             midpointy = (c1.y + c2.y) / 2
 
-            c1.x = midpointx + c1.radius * (c1.x - c2.x) / dist
-            c1.y = midpointy + c1.radius * (c1.y - c2.y) / dist
-            c2.x = midpointx + c2.radius * (c2.x - c1.x) / dist
-            c2.y = midpointy + c2.radius * (c2.y - c1.y) / dist
+            c1.x = midpointx + c1.radius * (c1.x - c2.x) / d
+            c1.y = midpointy + c1.radius * (c1.y - c2.y) / d
+            c2.x = midpointx + c2.radius * (c2.x - c1.x) / d
+            c2.y = midpointy + c2.radius * (c2.y - c1.y) / d
 
     @staticmethod
     def dynamic_static(c1: Entity, c2: Entity) -> None:
@@ -48,8 +48,8 @@ class Collision:
             ny = (c2.y - collisiony) / collisiondist
             p = 2 * (c1.dx * nx + c1.dy * ny) / (c1.m + c2.m)
 
-            c1.x += c1.dx - p * c1.m * nx - p * c2.m * nx
-            c1.y += c1.dy - p * c1.m * ny - p * c2.m * ny
+            c1.x += -p * c1.m * nx - p * c2.m * nx
+            c1.y += -p * c1.m * ny - p * c2.m * ny
 
     @staticmethod
     def dynamic_dynamic(c1: Entity, c2: Entity) -> None:
@@ -76,6 +76,8 @@ class Collision:
             movement_vector_length = sqrt(c2.dx**2 + c2.dy**2)
             collision2x = sx - backdist * (c2.dx / movement_vector_length)
             collision2y = sy - backdist * (c2.dy / movement_vector_length)
+
+            del sx, sy, closestdistsq, backdist, movement_vector_length
 
             d = sqrt(
                 (collision1x - collision2x) ** 2 + (collision1y - collision2y) ** 2

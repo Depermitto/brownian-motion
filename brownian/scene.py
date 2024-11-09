@@ -1,5 +1,4 @@
 import pygame
-import numpy as np
 from pygame.locals import *  # type: ignore
 from .collision import Collision
 
@@ -23,20 +22,21 @@ class Scene:
         self._entities.append(entity)
 
     def on_loop(self, dt: float, bounding_box: Tuple[int, int, int, int]) -> None:
-        for c in self._entities:
-            c.move(dt)
-
         for c1 in self._entities:
+            c1.move(dt)
             for c2 in self._entities:
-                if c2 == c1:
+                if c1 == c2:
                     continue
-
-                Collision.dynamic_dynamic(c1, c2)
-                # Collision.dynamic_static(c1, c2)
-                # Collision.static_static(c1, c2, 100)
-
-        for c in self._entities:
-            Collision.bounding_box(c, bounding_box)
+                match (c1.dx, c1.dy, c2.dx, c2.dy):
+                    case (0, 0, 0, 0):
+                        Collision.static_static(c1, c2, int(c1.radius + c2.radius / 4))
+                    case (0, 0, _, _):
+                        Collision.dynamic_static(c2, c1)
+                    case (_, _, 0, 0):
+                        Collision.dynamic_static(c1, c2)
+                    case _:
+                        Collision.dynamic_dynamic(c1, c2)
+            Collision.bounding_box(c1, bounding_box)
 
     def on_render(self, surface) -> None:
         surface.fill(self._background_color)

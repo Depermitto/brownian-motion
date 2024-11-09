@@ -4,7 +4,7 @@ import numpy as np
 class BrownianMotion:
     @staticmethod
     def static(dt: float, mu: float = 0, sigma: float = 1) -> float:
-        return 0
+        return 1e-100
 
     @staticmethod
     def standard(dt: float, mu: float = 0, sigma: float = 1) -> float:

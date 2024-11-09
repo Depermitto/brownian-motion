@@ -38,9 +38,9 @@ class Entity(pygame.sprite.Sprite):
         self._y_step = y_motion
 
         self.dx = 0
-        """Difference between the previous position and current on x axis"""
+        """Position vector between the previous position and current on x axis"""
         self.dy = 0
-        """Difference between the previous position and current on y axis"""
+        """Position vector between the previous position and current on y axis"""
 
         # other elements
         self.m = m

@@ -11,14 +11,14 @@ class App:
     def __init__(self, background_color: Tuple[int, int, int] = (21, 32, 43)) -> None:
         pygame.init()
         pygame.display.set_caption("Brownian motion simulation")
-        self.size = 1600, 800
+        self.size = 1280, 720
         self._display_surf = pygame.display.set_mode(
             self.size, pygame.RESIZABLE | pygame.HWSURFACE | pygame.DOUBLEBUF
         )
         self._is_running = True
         self._background_color = background_color
         self._curr_scene: Scene | None = None
-        self._menu = Menu(self.select_scene, size=(1600, 800))
+        self._menu = Menu(self.select_scene, size=self.size)
 
     def register_scene(self, scene: Scene) -> None:
         self._menu.register_scene(scene)
