@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import *  # type: ignore
+from pygame.locals import *
 
 # typing imports
 from typing import Tuple, List

@@ -1,5 +1,5 @@
 import pygame
-from pygame.locals import *  # type: ignore
+from pygame.locals import *
 from .collision import Collision
 
 # typing imports
@@ -27,7 +27,7 @@ class Scene:
             for c2 in self._entities:
                 if c1 == c2:
                     continue
-                match (c1.dx, c1.dy, c2.dx, c2.dy):
+                match (c1.vx, c1.vy, c2.vx, c2.vy):
                     case (0, 0, 0, 0):
                         Collision.static_static(c1, c2, int(c1.radius + c2.radius / 4))
                     case (0, 0, _, _):

@@ -1,4 +1,3 @@
-import brownian
 from .scene import Scene
 from .entity import Entity
 from .trailing_entity import TrailingEntity
@@ -75,19 +74,9 @@ def different_movements() -> Scene:
 
 def simulation() -> Scene:
     maxx, maxy = pygame.display.get_window_size()
-
     s = Scene("Simulation")
-    s.register_entity(
-        TrailingEntity(
-            center=(maxx / 2, maxy * 2 / 3),
-            radius=35,
-            color=(100, 200, 255),
-            m=1e-19,
-            movement_multiplier=5,
-        )
-    )
 
-    entities_n = 200
+    entities_n = 100
     x = np.random.randint(0, maxx, entities_n)
     y = np.random.randint(0, maxy, entities_n)
     for i in range(entities_n):
@@ -95,10 +84,20 @@ def simulation() -> Scene:
             Entity(
                 center=(x[i], y[i]),
                 color=(0x5E, 0x5E, 0x5E),
-                radius=10,
+                radius=15,
                 m=3e-19,
-                movement_multiplier=100,
+                movement_multiplier=50,
             )
         )
+
+    s.register_entity(
+        TrailingEntity(
+            center=(maxx / 2, maxy * 2 / 3),
+            radius=75,
+            color=(100, 200, 255),
+            m=1e-19,
+            # movement_multiplier=5,
+        )
+    )
 
     return s

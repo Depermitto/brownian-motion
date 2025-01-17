@@ -34,22 +34,27 @@ class Collision:
         if distsq < radiisq:
             # let (s) be the closest point on line between moving c1 and non-moving c2
             sx, sy = Collision._closest_point_on_line(
-                c1.x - c1.dx, c1.y - c1.dy, c1.x, c1.y, c2.x, c2.y
+                c1.x + c1.vx,
+                c1.y + c1.vy,
+                c1.x,
+                c1.y,
+                c2.x,
+                c2.y,
             )
             closestdistsq = (c2.x - sx) ** 2 + (c2.y - sy) ** 2
             backdist = sqrt(radiisq - closestdistsq)
-            movement_vector_length = sqrt(c1.dx**2 + c1.dy**2)
-            collisionx = sx - backdist * (c1.dx / movement_vector_length)
-            collisiony = sy - backdist * (c1.dy / movement_vector_length)
+            movement_vector_length = sqrt(c1.vx**2 + c1.vy**2)
+            collisionx = sx - backdist * (c1.vx / movement_vector_length)
+            collisiony = sy - backdist * (c1.vy / movement_vector_length)
 
             collisiondist = sqrt((c2.x - collisionx) ** 2 + (c2.y - collisiony) ** 2)
 
             nx = (c2.x - collisionx) / collisiondist
             ny = (c2.y - collisiony) / collisiondist
-            p = 2 * (c1.dx * nx + c1.dy * ny) / (c1.m + c2.m)
+            p = 2 * (c1.vx * nx + c1.vy * ny) / (c1.m + c2.m)
 
-            c1.x += -p * c1.m * nx - p * c2.m * nx
-            c1.y += -p * c1.m * ny - p * c2.m * ny
+            c1.vx = c1.vx - p * c1.m * nx - p * c2.m * nx
+            c1.vy = c2.vy - p * c1.m * ny - p * c2.m * ny
 
     @staticmethod
     def dynamic_dynamic(c1: Entity, c2: Entity) -> None:
@@ -60,22 +65,32 @@ class Collision:
         radiisq = (c1.radius + c2.radius) ** 2
         if distsq < radiisq:
             sx, sy = Collision._closest_point_on_line(
-                c1.x - c1.dx, c1.y - c1.dy, c1.x, c1.y, c2.x, c2.y
+                c1.x + c1.vx,
+                c1.y + c1.vy,
+                c1.x,
+                c1.y,
+                c2.x,
+                c2.y,
             )
             closestdistsq = (c2.x - sx) ** 2 + (c2.y - sy) ** 2
             backdist = sqrt(radiisq - closestdistsq)
-            movement_vector_length = sqrt(c1.dx**2 + c1.dy**2)
-            collision1x = sx - backdist * (c1.dx / movement_vector_length)
-            collision1y = sy - backdist * (c1.dy / movement_vector_length)
+            movement_vector_length = sqrt(c1.vx**2 + c1.vy**2)
+            collision1x = sx - backdist * (c1.vx / movement_vector_length)
+            collision1y = sy - backdist * (c1.vy / movement_vector_length)
 
             sx, sy = Collision._closest_point_on_line(
-                c2.x - c2.dx, c2.y - c2.dy, c2.x, c2.y, c1.x, c1.y
+                c1.x + c1.vx,
+                c1.y + c1.vy,
+                c1.x,
+                c1.y,
+                c2.x,
+                c2.y,
             )
             closestdistsq = (c1.x - sx) ** 2 + (c1.y - sy) ** 2
             backdist = sqrt(radiisq - closestdistsq)
-            movement_vector_length = sqrt(c2.dx**2 + c2.dy**2)
-            collision2x = sx - backdist * (c2.dx / movement_vector_length)
-            collision2y = sy - backdist * (c2.dy / movement_vector_length)
+            movement_vector_length = sqrt(c2.vx**2 + c2.vy**2)
+            collision2x = sx - backdist * (c2.vx / movement_vector_length)
+            collision2y = sy - backdist * (c2.vy / movement_vector_length)
 
             del sx, sy, closestdistsq, backdist, movement_vector_length
 
@@ -84,12 +99,12 @@ class Collision:
             )
             nx = (collision2x - collision1x) / d
             ny = (collision2y - collision1y) / d
-            p = 2 * (c1.dx * nx + c1.dy * ny - c2.dx * nx - c2.dy * ny) / (c1.m + c2.m)
+            p = 2 * (c1.vx * nx + c1.vy * ny - c2.vx * nx - c2.vy * ny) / (c1.m + c2.m)
 
-            c1.x -= p * c1.m * nx
-            c1.y -= p * c1.m * ny
-            c2.x += p * c2.m * nx
-            c2.y += p * c2.m * ny
+            c1.vx -= p * c1.m * nx
+            c1.vy -= p * c1.m * ny
+            c2.vx += p * c2.m * nx
+            c2.vy += p * c2.m * ny
 
     @staticmethod
     def bounding_box(c: Entity, bounds: Tuple[int, int, int, int]) -> None:
