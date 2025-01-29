@@ -38,8 +38,8 @@ class Entity(pygame.sprite.Sprite):
         self._y_step = y_motion
 
         # velocity
-        self.vx = 0
-        self.vy = 0
+        self.vx: float = 0
+        self.vy: float = 0
 
         # other elements
         self.m = m
@@ -49,11 +49,11 @@ class Entity(pygame.sprite.Sprite):
         pygame.draw.circle(surface, self.color, (self.x, self.y), self.radius)
 
     def move(self, dt: float):
-        DAMP_AMOUNT = 0.01
+        DAMP_AMOUNT = 0.97
         self.vx *= DAMP_AMOUNT
         self.vy *= DAMP_AMOUNT
 
         stepx = self._x_step(dt, self._mu, self._sigma) * self._p
         stepy = self._y_step(dt, self._mu, self._sigma) * self._p
-        self.x += stepx + self.vx * dt
-        self.y += stepy + self.vy * dt
+        self.x += stepx + self.vx
+        self.y += stepy + self.vy

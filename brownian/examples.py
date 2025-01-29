@@ -85,7 +85,7 @@ def simulation() -> Scene:
                 center=(x[i], y[i]),
                 color=(0x5E, 0x5E, 0x5E),
                 radius=15,
-                m=3e-19,
+                m=3e-18,
                 movement_multiplier=50,
             )
         )
@@ -96,7 +96,7 @@ def simulation() -> Scene:
             radius=75,
             color=(100, 200, 255),
             m=1e-19,
-            # movement_multiplier=5,
+            movement_multiplier=5,
         )
     )
 

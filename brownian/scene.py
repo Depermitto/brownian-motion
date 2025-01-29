@@ -1,6 +1,8 @@
 import pygame
+import numpy as np
 from pygame.locals import *
 from .collision import Collision
+from math import sqrt
 
 # typing imports
 from typing import Tuple, List
@@ -27,15 +29,19 @@ class Scene:
             for c2 in self._entities:
                 if c1 == c2:
                     continue
-                match (c1.vx, c1.vy, c2.vx, c2.vy):
-                    case (0, 0, 0, 0):
-                        Collision.static_static(c1, c2, int(c1.radius + c2.radius / 4))
-                    case (0, 0, _, _):
-                        Collision.dynamic_static(c2, c1)
-                    case (_, _, 0, 0):
-                        Collision.dynamic_static(c1, c2)
-                    case _:
-                        Collision.dynamic_dynamic(c1, c2)
+                elif c1.vx == c1.vy == c2.vx == c2.vy == 0:
+                    Collision.static_static(c1, c2)
+                    c1.vx = np.random.rand() / 100
+                    c1.vy = np.random.rand() / 100
+                    c2.vx = np.random.rand() / 100
+                    c2.vy = np.random.rand() / 100
+                elif c1.vx == c1.vy == 0:
+                    Collision.dynamic_static(c2, c1)
+                elif c2.vx == c2.vy == 0:
+                    Collision.dynamic_static(c1, c2)
+                else:
+                    Collision.dynamic_dynamic(c1, c2)
+            print(sqrt(c1.vx**2 + c1.vy**2))
             Collision.bounding_box(c1, bounding_box)
 
     def on_render(self, surface) -> None:
