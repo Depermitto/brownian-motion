@@ -57,8 +57,8 @@ def different_movements() -> Scene:
         (255, 0, 0),
         x_motion=BrownianMotion.drift,
         y_motion=BrownianMotion.drift,
-        mu=3,
-        sigma=7,
+        mu=2,
+        sigma=2,
     )
     geo = Entity(
         (1280, 400),
@@ -66,8 +66,8 @@ def different_movements() -> Scene:
         (255, 255, 255),
         x_motion=BrownianMotion.geometric,
         y_motion=BrownianMotion.geometric,
-        mu=3,
-        sigma=7,
+        mu=2,
+        sigma=2,
     )
     s.register_entity(stat)
     s.register_entity(std)
