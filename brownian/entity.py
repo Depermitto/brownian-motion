@@ -19,6 +19,7 @@ class Entity(pygame.sprite.Sprite):
         x_motion: Callable = BrownianMotion.standard,
         y_motion: Callable = BrownianMotion.standard,
         movement_multiplier: float = 10,
+        damp: float = 0.75,
     ):
         pygame.sprite.Sprite.__init__(self)
         if type(radius) != int or radius <= 0:
@@ -44,16 +45,17 @@ class Entity(pygame.sprite.Sprite):
         # other elements
         self.m = m
         self._p = movement_multiplier
+        self.damp = damp
 
     def draw(self, surface: pygame.Surface) -> None:
         pygame.draw.circle(surface, self.color, (self.x, self.y), self.radius)
 
     def move(self, dt: float):
-        DAMP_AMOUNT = 0.97
-        self.vx *= DAMP_AMOUNT
-        self.vy *= DAMP_AMOUNT
+        self.vx += self._x_step(dt, self._mu, self._sigma) * self._p
+        self.vy += self._y_step(dt, self._mu, self._sigma) * self._p
 
-        stepx = self._x_step(dt, self._mu, self._sigma) * self._p
-        stepy = self._y_step(dt, self._mu, self._sigma) * self._p
-        self.x += stepx + self.vx
-        self.y += stepy + self.vy
+        self.x += self.vx
+        self.y += self.vy
+
+        self.vx *= self.damp
+        self.vy *= self.damp

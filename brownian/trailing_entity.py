@@ -20,9 +20,19 @@ class TrailingEntity(Entity):
         y_motion: Callable = BrownianMotion.standard,
         movement_multiplier: float = 10,
         trail_color: Tuple[int, int, int] = (255, 255, 255),
+        damp: float = 0.75,
     ):
         super().__init__(
-            center, radius, color, m, mu, sigma, x_motion, y_motion, movement_multiplier
+            center,
+            radius,
+            color,
+            m,
+            mu,
+            sigma,
+            x_motion,
+            y_motion,
+            movement_multiplier,
+            damp,
         )
         self.trail: list[Tuple[float, float]] = [(self.x, self.y)]
         self.trail_color: Tuple[int, int, int] = trail_color

@@ -9,6 +9,6 @@ def main():
     app.register_scene(brownian.examples.simulation())
     app.run()
 
-    
+
 if __name__ == "__main__":
     main()

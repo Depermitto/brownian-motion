@@ -76,7 +76,7 @@ def simulation() -> Scene:
     maxx, maxy = pygame.display.get_window_size()
     s = Scene("Simulation")
 
-    entities_n = 100
+    entities_n = 150
     x = np.random.randint(0, maxx, entities_n)
     y = np.random.randint(0, maxy, entities_n)
     for i in range(entities_n):
@@ -86,17 +86,17 @@ def simulation() -> Scene:
                 color=(0x5E, 0x5E, 0x5E),
                 radius=15,
                 m=3e-18,
-                movement_multiplier=50,
+                movement_multiplier=70,
             )
         )
 
     s.register_entity(
         TrailingEntity(
             center=(maxx / 2, maxy * 2 / 3),
-            radius=75,
+            radius=55,
             color=(100, 200, 255),
             m=1e-19,
-            movement_multiplier=5,
+            movement_multiplier=20,
         )
     )
 
