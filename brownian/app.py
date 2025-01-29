@@ -8,6 +8,10 @@ from .menu import Menu
 
 
 class App:
+    """
+    Main application class. It is responsible for handling the main loop and
+    the event loop. It also handles the initialization of the pygame window.
+    """
     def __init__(self, background_color: Tuple[int, int, int] = (21, 32, 43)) -> None:
         pygame.init()
         pygame.display.set_caption("Brownian motion simulation")

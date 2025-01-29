@@ -4,6 +4,9 @@ from numpy import sqrt
 
 
 class Collision:
+    """
+    A collection of static methods that are used in collision resolution.
+    """
     @staticmethod
     def static_static(c1: Entity, c2: Entity, threshold: int = 0) -> None:
         """Performs static-static collision check

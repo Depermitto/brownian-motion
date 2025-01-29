@@ -7,6 +7,10 @@ import numpy as np
 import pygame
 
 
+"""
+Example scenes for the Brownian motion simulation.
+"""
+
 def two_entities() -> Scene:
     s = Scene("Two entities")
     e1 = Entity((200, 200), 50)

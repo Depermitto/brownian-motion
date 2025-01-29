@@ -10,6 +10,18 @@ from .entity import Entity
 
 
 class Scene:
+    """
+    A class representing a scene in the simulation.
+    # Fields
+    - name: str - The name of the scene.
+    - _background_color: Tuple[int, int, int] - The background color of the scene in RGB format.
+    - _entities: List[Entity] - A list of entities in the scene.
+    # Methods
+    - get_name() -> str: Returns the name of the scene.
+    - register_entity(entity: Entity) -> None: Registers an entity in the scene.
+    - on_loop(dt: float, bounding_box: Tuple[int, int, int, int]) -> None: The main loop of the scene.
+    - on_render(surface) -> None: Renders the scene on the given surface.
+    """
     def __init__(
         self, name: str, background_color: Tuple[int, int, int] = (21, 32, 43)
     ) -> None:
@@ -41,7 +53,6 @@ class Scene:
                     Collision.dynamic_static(c1, c2)
                 else:
                     Collision.dynamic_dynamic(c1, c2)
-            print(sqrt(c1.vx**2 + c1.vy**2))
             Collision.bounding_box(c1, bounding_box)
 
     def on_render(self, surface) -> None:

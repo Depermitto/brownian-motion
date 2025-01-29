@@ -9,6 +9,11 @@ import pygame_menu.events, pygame_menu.themes
 
 
 class Menu(pygame_menu.Menu):
+    """
+    A class representing the main menu of the application. It is responsible for
+    displaying the available scenes and allowing the user to choose one. 
+    Can be opened by pressing ESC.
+    """
     def __init__(
         self,
         callback: Callable,

@@ -8,6 +8,9 @@ from typing import Tuple, Callable
 
 
 class TrailingEntity(Entity):
+    """
+    A class representing an entity that leaves a trail behind it showing it's movement pattern.
+    """
     def __init__(
         self,
         center: Tuple[float | int, float | int],

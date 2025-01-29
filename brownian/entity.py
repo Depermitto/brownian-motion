@@ -8,6 +8,23 @@ from typing import Tuple, Callable
 
 
 class Entity(pygame.sprite.Sprite):
+    """
+    A class representing a simple entity in the simulation.
+    # Fields
+    - center: Tuple[float | int, float | int] - The starting position of the entity.
+    - radius: int - The radius of the entity (it is a circle).
+    - color: Tuple[int, int, int] - The color of the entity in RGB format.
+    - m: float - The mass of the entity.
+    - mu: float - The mean of the normal distribution for the x and y motion.
+    - sigma: float - The standard deviation of the normal distribution for the x and y motion.
+    - x_motion: Callable - The function that generates the x motion (from the BrownianMotion).
+    - y_motion: Callable - The function that generates the y motion (from the BrownianMotion).
+    - movement_multiplier: float - The multiplier for the motion.
+    - damp: float - The dampening factor for the velocity.
+    # Methods
+    - draw(surface: pygame.Surface) -> None: Draws the entity on the given surface.
+    - move(dt: float) -> None: Moves the entity based on the motion functions and the time step.
+    """
     def __init__(
         self,
         center: Tuple[float | int, float | int],
